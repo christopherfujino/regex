@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include <vector>
+
+#include "regex.hpp"
 
 // Inductive operators
 // Union R = S | T (lowest precedence)
@@ -8,22 +9,6 @@
 
 /// Sample program alpha
 const char alpha[] = "(a|b)*c";
-
-enum class TokenType {
-  character,
-  unionbar,
-  concatenate,
-  star,
-  lparen,
-  rparen,
-};
-
-struct Token {
-  TokenType type;
-  union {
-    char character;
-  } of;
-};
 
 void debugToken(const Token &token) {
   using enum TokenType;
@@ -50,12 +35,6 @@ void debugToken(const Token &token) {
   }
 }
 
-struct Expr {};
-
-std::vector<Token> lex(const char *);
-
-Expr parse(std::vector<Token>);
-
 int main() {
   auto tokens = lex(alpha);
   for (const auto &token : tokens) {
@@ -66,13 +45,15 @@ int main() {
 std::vector<Token> lex(const char *program) {
   using enum TokenType;
 
-  // This value won't be used, but just so we don't insert a leading concatenate...
+  // This value won't be used, but just so we don't insert a leading
+  // concatenate...
   Token previousToken = Token{.type = concatenate};
   std::vector<Token> tokens = {};
   char c;
   for (int i = 0; (c = program[i]) != '\0';) {
     // Should we scan implicit concat?
-    if (previousToken.type != lparen && previousToken.type != unionbar && previousToken.type != concatenate) {
+    if (previousToken.type != lparen && previousToken.type != unionbar &&
+        previousToken.type != concatenate) {
       if (c != ')' && c != '|' && c != '*') {
         previousToken = Token{.type = concatenate};
         tokens.push_back(previousToken);
