@@ -40,6 +40,7 @@ int main() {
   for (const auto &token : tokens) {
     debugToken(token);
   }
+  parse(tokens);
 }
 
 std::vector<Token> lex(const char *program) {
