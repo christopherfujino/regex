@@ -1,14 +1,19 @@
-CFLAGS = -std=c++20 -Wall
+CXXFLAGS = -std=c++20 -Wall -g
+BINARY = ./a.out
 
 .PHONY: run
-run: a.out
-	./a.out
+run: $(BINARY)
+	$(BINARY)
 
-a.out: main.o parse.o
+$(BINARY): main.o parse.o
 	clang++ main.o parse.o -o a.out
 
 main.o: main.cpp regex.hpp
-	clang++ $(CFLAGS) -c main.cpp -o main.o
+	clang++ $(CXXFLAGS) -c $< -o $@
 
 parse.o: parse.cpp regex.hpp
-	clang++ $(CFLAGS) -c parse.cpp -o parse.o
+	clang++ $(CXXFLAGS) -c $< -o $@
+
+.PHONY: clean
+clean:
+	rm -f *.o $(BINARY)

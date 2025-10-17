@@ -2,11 +2,6 @@
 
 #include "regex.hpp"
 
-// Inductive operators
-// Union R = S | T (lowest precedence)
-// Concatenation R = S ⋅ T
-// Closure R = S* (highest precedence)
-
 /// Sample program alpha
 const char alpha[] = "(a|b)*c";
 
