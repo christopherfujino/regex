@@ -1,5 +1,5 @@
 CXX = clang++
-CXXFLAGS = -std=c++20 -Wall -Werror -Wextra -g
+CXXFLAGS = -std=c++20 -Wall -Werror -Wextra -Wpedantic -g
 BINARY = a.out
 
 .PHONY: run
