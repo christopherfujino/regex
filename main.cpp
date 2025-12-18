@@ -10,7 +10,7 @@ void debugToken(const Token &token) {
 
   switch (token.type) {
   case character:
-    printf("character (%c)\n", token.of.character);
+    //printf("character (%c)\n", token.of.character);
     break;
   case unionbar:
     printf("unionbar\n");
@@ -68,9 +68,9 @@ std::vector<Token> lex(const char *program) {
     } else if (c == '*') {
       previousToken = Token{.type = star};
       tokens.push_back(previousToken);
-    } else { // TODO
-      previousToken = Token{.type = character, .of = {c}};
-      tokens.push_back(previousToken);
+    //} else { // TODO
+    //  previousToken = Token{.type = character, .of = {c}};
+    //  tokens.push_back(previousToken);
     }
     i += 1;
   }

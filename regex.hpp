@@ -11,9 +11,9 @@ enum class TokenType {
 
 struct Token {
   TokenType type;
-  union {
-    char character;
-  } of;
+  //union {
+  //  char character;
+  //} of;
 };
 
 std::vector<Token> lex(const char *);
