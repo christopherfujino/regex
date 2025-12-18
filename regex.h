@@ -1,5 +1,7 @@
 #include <vector>
 
+namespace __CHRIS_REGEX {
+
 enum class TokenType {
   character,
   unionbar,
@@ -27,3 +29,5 @@ struct Expr {
 };
 
 Expr parse(std::vector<Token>);
+
+} // namespace __CHRIS_REGEX

@@ -1,9 +1,11 @@
 #include <stdio.h>
 
-#include "regex.hpp"
+#include "regex.h"
 
 /// Sample program alpha
 const char alpha[] = "(a|b)*c";
+
+using namespace __CHRIS_REGEX;
 
 void debugToken(const Token &token) {
   using enum TokenType;
@@ -38,7 +40,7 @@ int main() {
   parse(tokens);
 }
 
-std::vector<Token> lex(const char *program) {
+std::vector<Token> __CHRIS_REGEX::lex(const char *program) {
   using enum TokenType;
 
   // This value won't be used, but just so we don't insert a leading

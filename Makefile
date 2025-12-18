@@ -9,10 +9,10 @@ run: $(BINARY)
 $(BINARY): main.o parse.o
 	$(CXX) main.o parse.o -o a.out
 
-main.o: main.cpp regex.hpp
+main.o: main.cpp regex.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-parse.o: parse.cpp regex.hpp
+parse.o: parse.cpp regex.h
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 .PHONY: clean
