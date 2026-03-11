@@ -12,6 +12,7 @@ static char sccsid[] = "@(#)grep.c	4.5 (Berkeley) 8/11/83";
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <ctype.h>
 
 #define	CBRA	1
@@ -31,6 +32,12 @@ static char sccsid[] = "@(#)grep.c	4.5 (Berkeley) 8/11/83";
 #define	LBSIZE	BUFSIZ
 #define	ESIZE	256
 #define	NBRA	9
+
+void errexit(char *s, char *f);
+void compile(char *astr);
+int advance(char *lp, char *ep);
+void execute(char *file);
+void succeed(char *f);
 
 char	expbuf[ESIZE];
 long	lnum;
@@ -53,7 +60,7 @@ long	tln;
 int	nsucc;
 char	*braslist[NBRA];
 char	*braelist[NBRA];
-char	bittab[] = {
+unsigned char	bittab[] = {
 	1,
 	2,
 	4,
@@ -64,11 +71,12 @@ char	bittab[] = {
 	128
 };
 
-main(argc, argv)
-char **argv;
+void main(int argc, char **argv)
 {
+  /*
 	extern char _sobuf[];
 	setbuf(stdout, _sobuf);
+  */
 	while (--argc > 0 && (++argv)[0][0]=='-')
 		switch (argv[0][1]) {
 
@@ -157,11 +165,9 @@ out:
 	exit(retcode != 0 ? retcode : nsucc == 0);
 }
 
-compile(astr)
-char *astr;
-{
-	register c;
-	register char *ep, *sp;
+void compile(char *astr) {
+	int c;
+	char *ep, *sp;
 	char *cstart;
 	char *lastep;
 	int cclcnt;
@@ -289,11 +295,11 @@ char *astr;
 	errexit("grep: RE error\n", (char *)NULL);
 }
 
-execute(file)
-char *file;
+void execute(char *file)
 {
-	register char *p1, *p2;
-	register c;
+  char *p1;
+  char *p2;
+  int c;
 
 	if (file) {
 		if (freopen(file, "r", stdin) == NULL) {
@@ -311,7 +317,7 @@ char *file;
 				if (cflag) {
 					if (nfile>1)
 						printf("%s:", file);
-					printf("%D\n", tln);
+					printf("%ld\n", tln);
 					fflush(stdout);
 				}
 				return;
@@ -354,10 +360,9 @@ char *file;
 	}
 }
 
-advance(lp, ep)
-register char *lp, *ep;
+int advance(char *lp, char *ep)
 {
-	register char *curlp;
+	char *curlp;
 	char c;
 	char *bbeg;
 	int ct;
@@ -483,8 +488,7 @@ register char *lp, *ep;
 	}
 }
 
-succeed(f)
-char *f;
+void succeed(char *f)
 {
 	nsucc = 1;
 	if (sflag)
@@ -518,8 +522,7 @@ char	*a, *b;
 	return(1);
 }
 
-errexit(s, f)
-char *s, *f;
+void errexit(char *s, char *f)
 {
 	fprintf(stderr, s, f);
 	exit(2);
