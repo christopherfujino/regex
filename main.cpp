@@ -2,17 +2,17 @@
 
 #include "regex.h"
 
+using namespace __CHRIS_REGEX;
+
 /// Sample program alpha
 const char alpha[] = "(a|b)*c";
-
-using namespace __CHRIS_REGEX;
 
 void debugToken(const Token &token) {
   using enum TokenType;
 
   switch (token.type) {
   case character:
-    //printf("character (%c)\n", token.of.character);
+    printf("character (%c)\n", token.of.character);
     break;
   case unionbar:
     printf("unionbar\n");
@@ -45,7 +45,7 @@ std::vector<Token> __CHRIS_REGEX::lex(const char *program) {
 
   // This value won't be used, but just so we don't insert a leading
   // concatenate...
-  Token previousToken = Token{.type = concatenate};
+  Token previousToken = Token::make(concatenate);
   std::vector<Token> tokens = {};
   char c;
   for (int i = 0; (c = program[i]) != '\0';) {
@@ -53,26 +53,26 @@ std::vector<Token> __CHRIS_REGEX::lex(const char *program) {
     if (previousToken.type != lparen && previousToken.type != unionbar &&
         previousToken.type != concatenate) {
       if (c != ')' && c != '|' && c != '*') {
-        previousToken = Token{.type = concatenate};
+        previousToken = Token::make(concatenate);
         tokens.push_back(previousToken);
         continue;
       }
     }
     if (c == '(') {
-      previousToken = Token{.type = lparen};
+      previousToken = Token::make(lparen);
       tokens.push_back(previousToken);
     } else if (c == ')') {
-      previousToken = Token{.type = rparen};
+      previousToken = Token::make(rparen);
       tokens.push_back(previousToken);
     } else if (c == '|') {
-      previousToken = Token{.type = unionbar};
+      previousToken = Token::make(unionbar);
       tokens.push_back(previousToken);
     } else if (c == '*') {
-      previousToken = Token{.type = star};
+      previousToken = Token::make(star);
       tokens.push_back(previousToken);
-    //} else { // TODO
-    //  previousToken = Token{.type = character, .of = {c}};
-    //  tokens.push_back(previousToken);
+    } else {
+      previousToken = Token::makeChar(c);
+      tokens.push_back(previousToken);
     }
     i += 1;
   }

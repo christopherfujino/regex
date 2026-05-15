@@ -12,10 +12,22 @@ enum class TokenType {
 };
 
 struct Token {
+  static Token makeChar(char c) {
+    return {
+        .type = TokenType::character,
+        .of = {.character = c},
+    };
+  }
+
+  static Token make(TokenType type) {
+    return {.type = type, .of = {.none = nullptr}};
+  }
+
   TokenType type;
-  //union {
-  //  char character;
-  //} of;
+  union {
+    char character;
+    void *none;
+  } of;
 };
 
 std::vector<Token> lex(const char *);
