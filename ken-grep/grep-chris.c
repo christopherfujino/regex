@@ -83,8 +83,9 @@ void compile(char *astr) {
   for (;;) {
     if (ep >= &expbuf[ESIZE])
       goto cerror;
-    if ((c = *sp++) != '*')
+    if ((c = *sp++) != '*') {
       lastep = ep;
+    }
     switch (c) {
 
     case '\0':

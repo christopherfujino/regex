@@ -40,6 +40,13 @@ def test(prg, corpus, expected_code)
   printf "\rRan #{$tests_finished} tests."
 end
 
+`cmake --build build`
+code = $?.exitstatus
+if code != 0
+  printf "Build failed!\n"
+  exit 1
+end
+
 test '.*4\.2bsd$', "# Title\nfrom 4.2bsd\n", 0
 test 'b.d',                 "from 4.2bsd\n", 0
 test '42bsd',               "from 4.2bsd\n", 1
