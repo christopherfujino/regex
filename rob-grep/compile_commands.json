@@ -1,0 +1,21 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-std=c23",
+      "-g",
+      "-O0",
+      "-Wall",
+      "-Werror",
+      "-Wextra",
+      "-Wpedantic",
+      "-c",
+      "-o",
+      "main.o",
+      "main.c"
+    ],
+    "directory": "/home/chris/git/regex/rob-grep",
+    "file": "/home/chris/git/regex/rob-grep/main.c",
+    "output": "/home/chris/git/regex/rob-grep/main.o"
+  }
+]

@@ -1,0 +1,9 @@
+CC = bear --append -- clang
+CFLAGS = -std=c23 -g -O0 -Wall -Werror -Wextra -Wpedantic
+LDFLAGS = -fsanitize=address
+
+a.out: main.o
+  $CC $LDFLAGS $prereq -o $target
+
+%.o: %.c
+  $CC $CFLAGS -c $stem.c -o $target
