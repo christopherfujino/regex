@@ -1,3 +1,6 @@
 a.out
 build/
 *.o
+*.exe
+*.d
+*.a

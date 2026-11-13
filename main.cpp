@@ -2,14 +2,10 @@
 
 #include "regex.h"
 
-using namespace __CHRIS_REGEX;
-
 /// Sample program alpha
 const char alpha[] = "(a|b)*c";
 
 void debugToken(const Token &token) {
-  using enum TokenType;
-
   switch (token.type) {
   case character:
     printf("character (%c)\n", token.of.character);
@@ -40,9 +36,7 @@ int main() {
   parse(tokens);
 }
 
-std::vector<Token> __CHRIS_REGEX::lex(const char *program) {
-  using enum TokenType;
-
+std::vector<Token> lex(const char *program) {
   // This value won't be used, but just so we don't insert a leading
   // concatenate...
   Token previousToken = Token::make(concatenate);
